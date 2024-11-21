@@ -7,11 +7,11 @@ build_image() {
     case $service_name in
         dns)
             echo "Construindo a imagem DNS..."
-            docker build -t my-dns ./dns
+            docker build -t imagem-dns ./dns
             ;;
         web)
             echo "Construindo a imagem Web..."
-            docker build -t my-web ./web
+            docker build -t imagem-web ./web
             ;;
         *)
             echo "Serviço desconhecido: $service_name"
@@ -33,10 +33,10 @@ start_service() {
         build_image "$service_name"
         case $service_name in
             dns)
-                docker run -d --name dns-server --restart unless-stopped -p 53:53/udp my-dns
+                docker run -d --name dns-server --restart unless-stopped -p 53:53/udp imagem-dns
                 ;;
             web)
-                docker run -d --name web-server --restart unless-stopped -p 80:80 my-web
+                docker run -d --name web-server --restart unless-stopped -p 80:80 imagem-web
                 ;;
         esac
     fi
